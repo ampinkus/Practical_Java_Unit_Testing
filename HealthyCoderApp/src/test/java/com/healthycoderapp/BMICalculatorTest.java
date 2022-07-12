@@ -1,11 +1,12 @@
 package com.healthycoderapp;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BMICalculatorTest {
-    @Test // if you dont put the @Test the metod IS NOT tested!
+    @Test // if you don't put the @Test the method IS NOT tested!
     void should_return_true_when_diet_recommended() { // use a meaningfull name for the method
         // brake the test in parts to help to understand what happens
         // given:  Where we input the test data
@@ -31,6 +32,23 @@ class BMICalculatorTest {
 
         // then:  we assert  the result
         assertFalse(recommended); // this case diet is not recommended assertFalse need to be false (0)
+    }
+
+    @Test
+    void should_throw_aritmethic_exception_when_high_zero() { // use a meaningfull name for the method
+        // brake the test in parts to help to understand what happens
+        // given:  Where we input the test data
+        double weight = 50;
+        double height = 0.0; // put high on zero
+
+        // when:  where we invoque the method under test and store the result on a variable.
+        // we need an Executable variable from Juniper.  It will not be executed inmediately, we pause the executable to assert Throws
+        // so it executes de Lambda and checks if it throws and exception
+        Executable executable = () -> BMICalculator.isDietRecommended(weight,height); // a Lambda expression
+
+        // then:  we assert  the result
+        // ArithmeticException.class is the expected exception. We need an executable to catch the throw exception
+        assertThrows(ArithmeticException.class,executable);
     }
 
 }
